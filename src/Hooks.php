@@ -7,38 +7,37 @@ class Hooks
 {
     protected $hooks = [];
 
-    public function hook($name, $domain = null)
+    public function hook($name, $hook = null)
     {
-        if (! $domain) {
-            $default = $this->defaultName($name);
-            if (! class_exists($default)) {
-                throw new \InvalidArgumentException('Must specify domain');
+        if (! $hook) {
+            $hook = $this->defaultHook($name);
+            if (! class_exists($hook)) {
+                throw new \InvalidArgumentException('Must specify hook callable');
             }
-            $domain = $default;
         }
 
-        $this->hooks[$name] = $domain;
+        $this->hooks[$name] = $hook;
     }
 
-    public function has($hook)
+    public function has($name)
     {
-        return isset($this->hooks[$hook]);
+        return isset($this->hooks[$name]);
     }
 
-    public function get($hook)
+    public function get($name)
     {
-        if (! $this->has($hook)) {
+        if (! $this->has($name)) {
             throw new \InvalidArgumentException('Must specify domain');
         }
-        return $this->hooks[$hook];
+        return $this->hooks[$name];
     }
 
-    protected function defaultName($name)
+    protected function defaultHook($name)
     {
         $upper = function($matches) {
             return strtoupper($matches[1]);
         };
 
-        return preg_replace_callback('/(?:^|_)([a-z])/',$upper, $name);
+        return preg_replace_callback('/(?:^|_)([a-z])/', $upper, $name);
     }
 }
