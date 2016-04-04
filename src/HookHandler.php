@@ -3,7 +3,7 @@
 
 namespace Hubkat\Hooker;
 
-use Hubkat\Event\Event;
+use Hubkat\EventInterface\EventInterface as Event;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -28,7 +28,7 @@ class HookHandler
 
         if (! $event instanceof Event) {
             throw new \InvalidArgumentException(
-                'Parsed body must be instance of Event'
+                'Parsed body must be instance of EventInterface'
             );
         }
 

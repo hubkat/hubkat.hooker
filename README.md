@@ -10,6 +10,7 @@ use Hubkat\Hooker\HookHandler;
 use Hubkat\Event\EventParser;
 use Hubkat\Event\EventValidator;
 use Hubkat\Event\Event;
+use Hubkat\EventInterface\EventType;
 
 use Relay\Middleware\ExceptionHandler;
 use Relay\Middleware\ResponseSender;
@@ -36,8 +37,8 @@ $hooker->middle(EventParser::class);
 $hooker->middle(EventValidator::class);
 $hooker->middle(HookHandler::class);
 
-$hooker->hook(Event::EVENT_ISSUE, 'My\Issue\Handler');
-$hooker->hook(Event::EVENT_DEPLOYMENT, 'My\Deployment\Handler');
+$hooker->hook(EventType::EVENT_ISSUE, 'My\Issue\Handler');
+$hooker->hook(EventType::EVENT_DEPLOYMENT, 'My\Deployment\Handler');
 
 $hooker->run(ServerRequestFactory::fromGlobals(), new Response());
 ```
